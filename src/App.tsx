@@ -1,5 +1,13 @@
-const App = () => {
-  return <div>App</div>
-}
+import styles from './App.module.css'
 
-export default App
+import { Header } from './components/Header'
+
+export default function App() {
+  return (
+    <div className={styles.container}>
+      <main>
+        <Header />
+      </main>
+    </div>
+  )
+}
