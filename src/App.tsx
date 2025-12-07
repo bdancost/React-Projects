@@ -1,6 +1,7 @@
 import styles from './App.module.css'
 import { useEffect, useState } from 'react'
-import { WORDS, Challenge } from './utils/words'
+import type { Challenge } from './utils/words'
+import { WORDS } from './utils/words'
 
 import { Header } from './components/Header'
 import { Tip } from './components/Tip'
@@ -8,10 +9,11 @@ import { Letter } from './components/Letter'
 import { Input } from './components/Input'
 import { Button } from './components/Button'
 import { LettersUsed } from './components/LettersUsed'
-
+import type { LettersUsedProps } from './components/LettersUsed'
 export default function App() {
   const [attempts, setAttempts] = useState(0)
   const [letter, setLetter] = useState('')
+  const [lettersUsed, setLettersUsed] = useState<LettersUsedProps[]>([])
   const [challenge, setChallenge] = useState<Challenge | null>(null)
 
   function handleRestartGame() {
@@ -32,6 +34,10 @@ export default function App() {
     startGame()
   }, [])
 
+  if (!challenge) {
+    return
+  }
+
   return (
     <div className={styles.container}>
       <main>
@@ -40,11 +46,9 @@ export default function App() {
         <Tip tip="Linguagem de programação dinâmica" />
 
         <div className={styles.word}>
-          <Letter value="R" />
-          <Letter value="e" />
-          <Letter value="a" />
-          <Letter value="c" />
-          <Letter value="t" />
+          {challenge.word.split('').map(() => (
+            <Letter value="" />
+          ))}
         </div>
 
         <h4>Palmite</h4>
@@ -54,7 +58,7 @@ export default function App() {
           <Button title="Confirmar" />
         </div>
 
-        <LettersUsed />
+        <LettersUsed data={lettersUsed} />
       </main>
     </div>
   )
