@@ -122,7 +122,14 @@ export default function App() {
         <h4>Palmite</h4>
 
         <div className={styles.guess}>
-          <Input autoFocus maxLength={1} placeholder="?" value={letter} onChange={(e) => setLetter(e.target.value)} />
+          <Input
+            autoFocus
+            maxLength={1}
+            placeholder="?"
+            value={letter}
+            onChange={(e) => setLetter(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e as unknown as KeyboardEvent)}
+          />
           <Button title="Confirmar" onClick={handleConfirm} />
         </div>
 
