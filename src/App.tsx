@@ -11,6 +11,7 @@ import { Button } from './components/Button'
 import { LettersUsed } from './components/LettersUsed'
 import type { LettersUsedProps } from './components/LettersUsed'
 export default function App() {
+  const [score, setScore] = useState(0)
   const [attempts, setAttempts] = useState(0)
   const [letter, setLetter] = useState('')
   const [lettersUsed, setLettersUsed] = useState<LettersUsedProps[]>([])
@@ -47,8 +48,16 @@ export default function App() {
       return alert('Você já utilizou essa letra!' + value)
     }
 
-    setLettersUsed((prevState) => [...prevState, { value, correct: false }])
+    const hits = challenge.word
+      .toUpperCase()
+      .split('')
+      .filter((char) => char === value).length
 
+    const correct = hits > 0
+    const currentScore = score + hits
+
+    setLettersUsed((prevState) => [...prevState, { value, correct }])
+    setScore(currentScore)
     setLetter('')
   }
 
@@ -65,7 +74,7 @@ export default function App() {
       <main>
         <Header current={attempts} max={10} onRestart={handleRestartGame} />
 
-        <Tip tip="Linguagem de programação dinâmica" />
+        <Tip tip={challenge.tip} />
 
         <div className={styles.word}>
           {challenge.word.split('').map(() => (
