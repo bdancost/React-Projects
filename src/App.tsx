@@ -18,7 +18,11 @@ export default function App() {
 
   const ATTEMPTS_MARGIN = 5
   function handleRestartGame() {
-    alert('Jogo reiniciado!')
+    const isConfirmed = window.confirm('Deseja reiniciar o jogo?')
+
+    if (isConfirmed) {
+      startGame()
+    }
   }
 
   function startGame() {
