@@ -18,8 +18,9 @@ export function Button({ isLoading, children, className, type = 'button', varian
     <button
       type={type}
       className={classMerge([
-        ' bg-green-100 text-white font-semibold rounded-lg hover:bg-green-200 disabled:opacity-50 disabled:cursor-not-allowed transition-ease-linear flex items-center justify-center',
+        ' bg-green-100 text-white font-semibold rounded-lg hover:bg-green-200 disabled:opacity-50 transition-ease-linear flex items-center justify-center cursor-pointer',
         variants.button[variant],
+        isLoading && 'cursor-progress',
         className,
       ])}
       disabled={isLoading}
