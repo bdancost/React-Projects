@@ -4,12 +4,17 @@ import { createContext } from 'react'
 
 type AuthContext = {
   session: null | UserAPIResponse
+  save: (user: UserAPIResponse) => void
 }
 
 export const AuthContext = createContext({} as AuthContext)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<UserAPIResponse | null>(null)
+  const [session, setSession] = useState<null | UserAPIResponse>(null)
 
-  return <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>
+  function save(data: UserAPIResponse) {
+    setSession(data)
+  }
+
+  return <AuthContext.Provider value={{ session, save }}>{children}</AuthContext.Provider>
 }
