@@ -12,21 +12,13 @@ import { Pagination } from '../components/Pagination'
 import { RefundItem } from '../components/RefundItem'
 import type { RefundItemProps } from '../components/RefundItem'
 
-const REFUND_EXAMPLE = {
-  id: '123',
-  name: 'John Doe',
-  category: 'Transporte',
-  amount: formatCurrency(34.5),
-  categoryImg: CATEGORIES['transport'].icon,
-}
-
 const PER_PAGE = 5
 
 export function Dashboard() {
   const [name, setName] = useState('')
   const [page, setPage] = useState(1)
   const [totalOfPage, setTotalOfPage] = useState(0)
-  const [refunds, setRefunds] = useState<RefundItemProps[]>([REFUND_EXAMPLE])
+  const [refunds, setRefunds] = useState<RefundItemProps[]>([])
 
   async function fetchRefunds() {
     try {
@@ -34,7 +26,17 @@ export function Dashboard() {
         `/refunds?name=${name.trim()}&page=${page}&perPage=${PER_PAGE}`
       )
 
-      console.log(response.data)
+      setRefunds(
+        response.data.refunds.map((refund) => ({
+          id: refund.id,
+          name: refund.user.name,
+          description: refund.name,
+          amount: formatCurrency(refund.amount),
+          categoryImg: CATEGORIES[refund.category].icon,
+        }))
+      )
+
+      setTotalOfPage(response.data.pagination.totalPages)
     } catch (error) {
       console.log(error)
 
