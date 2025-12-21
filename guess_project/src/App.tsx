@@ -1,4 +1,4 @@
-import styles from './App.module.css'
+import styles from './app.module.css'
 import { useEffect, useState } from 'react'
 import type { Challenge } from './utils/words'
 import { WORDS } from './utils/words'
