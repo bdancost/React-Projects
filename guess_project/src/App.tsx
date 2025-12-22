@@ -15,6 +15,7 @@ export default function App() {
   const [letter, setLetter] = useState('')
   const [lettersUsed, setLettersUsed] = useState<LettersUsedProps[]>([])
   const [challenge, setChallenge] = useState<Challenge | null>(null)
+  const [shake, setShake] = useState(false)
 
   const ATTEMPTS_MARGIN = 5
   function handleRestartGame() {
@@ -65,6 +66,13 @@ export default function App() {
     setLettersUsed((prevState) => [...prevState, { value, correct }])
     setScore(currentScore)
     setLetter('')
+
+    if (!correct) {
+      setShake(true)
+      setTimeout(() => {
+        setShake(false)
+      }, 300)
+    }
   }
 
   function handleKeyPress(event: KeyboardEvent) {
@@ -115,7 +123,7 @@ export default function App() {
 
         <Tip tip={challenge.tip} />
 
-        <div className={styles.word}>
+        <div className={`${styles.word} ${shake && styles.shake}`}>
           {challenge.word.split('').map((letter, index) => {
             const letterUsed = lettersUsed.find((used) => used.value.toUpperCase() === letter.toUpperCase())
 
@@ -123,7 +131,7 @@ export default function App() {
           })}
         </div>
 
-        <h4>Palmite</h4>
+        <h4>Palpite</h4>
 
         <div className={styles.guess}>
           <Input
